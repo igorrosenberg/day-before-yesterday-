@@ -23,7 +23,8 @@
 html, body { margin: 0; background: var(--bg); color: var(--text); }
 body {
   font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  overscroll-behavior-y: contain;
+  /* No browser pull-to-refresh or swipe-back gesture: the app handles both swipes itself. */
+  overscroll-behavior: none;
 }
 #bar {
   position: sticky; top: 0; z-index: 10;
@@ -34,6 +35,7 @@ body {
 #bar h1 { flex: 1; margin: 0; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #bar button { background: none; border: 0; color: #fff; cursor: pointer; font: inherit; }
 #bar .icon { font-size: 24px; width: 36px; height: 36px; line-height: 1; }
+#bar #settingsBtn { font-size: 20px; }
 #bar .text { font-size: 13px; border: 1px solid rgba(255,255,255,.6); border-radius: 14px; padding: 3px 10px; }
 #bar .text[aria-pressed="true"] { background: rgba(255,255,255,.25); }
 main { max-width: 760px; margin: 0 auto; padding: 0 0 calc(env(safe-area-inset-bottom) + 24px); }
@@ -44,6 +46,16 @@ main { max-width: 760px; margin: 0 auto; padding: 0 0 calc(env(safe-area-inset-b
 .hint a { color: inherit; }
 .status { text-align: center; color: var(--muted); margin: 24px 16px; }
 .status:empty { display: none; }
+
+/* Pull to refresh */
+#ptr {
+  height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 22px;
+}
+#ptr.settle { transition: height .2s ease-out; }
+#ptr span { transition: transform .2s; }
+#ptr.armed { color: var(--accent); }
+#ptr.armed span { transform: rotate(180deg); }
 
 /* Story list */
 #list { list-style: none; margin: 0; padding: 0; }
@@ -75,6 +87,7 @@ li.read .title { color: var(--muted); }
 li.read .rank::after { content: " \2713"; color: var(--read-bg); }
 
 /* Reader */
+#readView { touch-action: pan-y pinch-zoom; }
 #story { background: var(--card); padding: 16px; border-bottom: 1px solid var(--line); }
 #story h2 { margin: 0 0 6px; font-size: 20px; line-height: 1.3; }
 #story h2 a { color: var(--text); text-decoration: none; }
@@ -98,13 +111,48 @@ li.read .rank::after { content: " \2713"; color: var(--read-bg); }
 .comment .meta { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
 .comment .body p { margin: 0 0 .6em; }
 .comment .body p:last-child { margin-bottom: 0; }
+.comment.clamped .body {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 70%, transparent);
+  mask-image: linear-gradient(#000 70%, transparent);
+}
+.comment .more {
+  display: block; margin: 6px 0 0; padding: 4px 0; border: 0; background: none;
+  color: var(--link); font: inherit; font-size: 14px; cursor: pointer;
+}
 .comment pre { white-space: pre-wrap; font-size: 13px; background: var(--bg); padding: 8px; border-radius: 6px; }
 a { color: var(--link); }
 
 #toast {
+  display: flex; align-items: center; gap: 14px;
   position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 24px);
   transform: translateX(-50%) translateY(20px);
   background: #333; color: #fff; padding: 8px 16px; border-radius: 20px;
   font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
 }
 #toast.show { opacity: .95; transform: translateX(-50%) translateY(0); }
+#toast.actionable { pointer-events: auto; }
+#toastAction {
+  border: 0; background: none; color: #ffb27a; font: inherit; font-weight: 600;
+  padding: 4px 2px; cursor: pointer; text-transform: uppercase; letter-spacing: .03em;
+}
+
+/* Settings */
+#settings {
+  border: 0; border-radius: 14px; padding: 20px; width: min(92vw, 380px);
+  background: var(--card); color: var(--text);
+}
+#settings::backdrop { background: rgba(0,0,0,.45); }
+#settings h2 { margin: 0 0 12px; font-size: 18px; }
+#settings label { display: block; margin: 0 0 14px; font-size: 15px; }
+#settings input {
+  display: block; width: 100%; margin-top: 4px; padding: 8px 10px; font: inherit;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text);
+}
+#settings label .small { display: block; margin-top: 4px; }
+#settings .actions { display: flex; justify-content: flex-end; gap: 8px; }
+#settings .actions button {
+  font: inherit; padding: 8px 16px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent; color: var(--text);
+}
+#settings .actions .primary { background: var(--accent); border-color: var(--accent); color: #fff; }
