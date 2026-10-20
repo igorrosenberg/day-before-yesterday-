@@ -281,7 +281,7 @@ function renderStoryHeader(s) {
   titleLink.href = s.url || hnUrl;
   titleLink.target = '_blank'; titleLink.rel = 'noopener noreferrer';
   els.story.querySelector('.meta').textContent = meta;
-  openLink.textContent = s.url ? 'Open article' : 'Open discussion';
+  openLink.textContent = s.url ? 'Open source article' : 'Open discussion';
   openLink.href = s.url || hnUrl;
   hnLink.href = hnUrl;
   if (!s.url) hnLink.remove();
