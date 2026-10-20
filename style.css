@@ -1,0 +1,109 @@
+:root {
+  --bg: #f6f6ef;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --muted: #828282;
+  --accent: #ff6600;
+  --line: #e4e4dc;
+  --read-bg: #4a8f5a;
+  --open-bg: #ff6600;
+  --link: #0b57d0;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #e8e8e8;
+    --muted: #9a9a9a;
+    --line: #2c2c2c;
+    --link: #8ab4f8;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body {
+  font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overscroll-behavior-y: contain;
+}
+#bar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 8px;
+  padding: calc(env(safe-area-inset-top) + 8px) 12px 8px;
+  background: var(--accent); color: #fff;
+}
+#bar h1 { flex: 1; margin: 0; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#bar button { background: none; border: 0; color: #fff; cursor: pointer; font: inherit; }
+#bar .icon { font-size: 24px; width: 36px; height: 36px; line-height: 1; }
+#bar .text { font-size: 13px; border: 1px solid rgba(255,255,255,.6); border-radius: 14px; padding: 3px 10px; }
+#bar .text[aria-pressed="true"] { background: rgba(255,255,255,.25); }
+main { max-width: 760px; margin: 0 auto; padding: 0 0 calc(env(safe-area-inset-bottom) + 24px); }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+#subtitle { margin: 10px 16px 6px; font-size: 13px; }
+.hint { text-align: center; font-size: 12px; margin: 16px; }
+.status { text-align: center; color: var(--muted); margin: 24px 16px; }
+.status:empty { display: none; }
+
+/* Story list */
+#list { list-style: none; margin: 0; padding: 0; }
+#list li {
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+#list li.hidden { display: none; }
+.swipe-bg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; color: #fff; font-weight: 600; font-size: 14px;
+}
+.swipe-bg .open, .swipe-bg .read { opacity: 0; }
+li.dir-right .swipe-bg { background: var(--open-bg); }
+li.dir-right .swipe-bg .open { opacity: 1; }
+li.dir-left .swipe-bg { background: var(--read-bg); }
+li.dir-left .swipe-bg .read { opacity: 1; }
+.row {
+  position: relative; display: flex; gap: 12px; align-items: baseline;
+  padding: 14px 16px; background: var(--card);
+  touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  cursor: pointer;
+}
+.row.animate { transition: transform .2s ease-out; }
+.rank { color: var(--muted); font-size: 14px; min-width: 1.6em; text-align: right; font-variant-numeric: tabular-nums; }
+.title { flex: 1; font-size: 16px; }
+li.read .title { color: var(--muted); }
+li.read .rank::after { content: " \2713"; color: var(--read-bg); }
+
+/* Reader */
+#story { background: var(--card); padding: 16px; border-bottom: 1px solid var(--line); }
+#story h2 { margin: 0 0 6px; font-size: 20px; line-height: 1.3; }
+#story h2 a { color: var(--text); text-decoration: none; }
+#story .meta { font-size: 13px; color: var(--muted); }
+#story .open-link {
+  display: inline-block; margin-top: 12px; padding: 8px 14px; border-radius: 8px;
+  background: var(--accent); color: #fff; text-decoration: none; font-size: 14px;
+}
+#story .open-link + .open-link { margin-left: 8px; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+#story .text { margin-top: 12px; }
+.section { font-size: 15px; margin: 18px 16px 2px; }
+#readView > .small { margin: 0 16px 8px; }
+#comments { list-style: none; margin: 0; padding: 0; }
+.comment {
+  background: var(--card); margin: 8px 12px; padding: 12px 14px;
+  border-radius: 10px; border: 1px solid var(--line);
+  cursor: copy; transition: background .2s;
+  overflow-wrap: anywhere;
+}
+.comment.copied { background: color-mix(in srgb, var(--accent) 15%, var(--card)); }
+.comment .meta { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.comment .body p { margin: 0 0 .6em; }
+.comment .body p:last-child { margin-bottom: 0; }
+.comment pre { white-space: pre-wrap; font-size: 13px; background: var(--bg); padding: 8px; border-radius: 6px; }
+a { color: var(--link); }
+
+#toast {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 24px);
+  transform: translateX(-50%) translateY(20px);
+  background: #333; color: #fff; padding: 8px 16px; border-radius: 20px;
+  font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+}
+#toast.show { opacity: .95; transform: translateX(-50%) translateY(0); }

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff6600">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Yesterday on HN</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="bar">
+  <button id="back" class="icon" hidden aria-label="Back">&#8249;</button>
+  <h1 id="heading">Yesterday</h1>
+  <button id="toggleRead" class="text" aria-pressed="false">Hide read</button>
+  <button id="refresh" class="icon" aria-label="Refresh">&#8635;</button>
+</header>
+
+<main>
+  <section id="listView">
+    <p id="subtitle" class="muted"></p>
+    <ol id="list"></ol>
+    <p id="listStatus" class="status"></p>
+    <p class="hint muted">Swipe right to read &middot; swipe left to mark read</p>
+  </section>
+
+  <section id="readView" hidden>
+    <article id="story"></article>
+    <h2 class="section">20 most insightful comments</h2>
+    <p class="muted small">Tap a comment to copy it.</p>
+    <ol id="comments"></ol>
+    <p id="commentStatus" class="status"></p>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
