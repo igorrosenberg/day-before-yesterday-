@@ -1,0 +1,9 @@
+{
+  "name": "Yesterday on HN",
+  "short_name": "Yesterday",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f6ef",
+  "theme_color": "#ff6600",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
