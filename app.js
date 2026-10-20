@@ -331,16 +331,10 @@ function plainLength(html) {
 function commentEl(c) {
   const li = document.createElement('li');
   li.className = 'comment';
-  const meta = document.createElement('div');
-  meta.className = 'meta';
-  const bits = [c.node.author, ago(c.node.created_at_i)];
-  if (c.descendants) bits.push(`${c.descendants} ${c.descendants === 1 ? 'reply' : 'replies'}`);
-  if (c.depth > 1 && c.parent && c.parent.author) bits.push(`in reply to ${c.parent.author}`);
-  meta.textContent = bits.join(' · ');
   const body = document.createElement('div');
   body.className = 'body';
   body.append(sanitize(c.node.text));
-  li.append(meta, body);
+  li.append(body);
   return li;
 }
 
