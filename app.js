@@ -408,6 +408,14 @@ els.refresh.addEventListener('click', () => {
   const m = location.hash.match(/^#\/item\/(\d+)/);
   if (m) showReader(Number(m[1])); else loadList(true);
 });
+// Bypass the 10 min GitHub Pages cache: refetch assets, then load index.html under a fresh ?v=<ms> URL.
+// localStorage is keyed by origin, not URL, so read marks and settings survive.
+$('#reload').addEventListener('click', async (e) => {
+  e.preventDefault();
+  const assets = ['index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'icon.svg'];
+  await Promise.all(assets.map((f) => fetch(f, { cache: 'reload' }).catch(() => {})));
+  location.replace(`${location.pathname}?v=${Date.now()}${location.hash}`);
+});
 els.toggleRead.addEventListener('click', () => {
   hideRead = !hideRead;
   store.set('yday.hideRead', hideRead);
