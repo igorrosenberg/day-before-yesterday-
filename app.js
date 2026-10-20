@@ -138,6 +138,7 @@ function storyRow(s, rank) {
 
 function applyReadFilter() {
   els.toggleRead.setAttribute('aria-pressed', String(hideRead));
+  els.toggleRead.textContent = hideRead ? 'Show read' : 'Hide read';
   let visible = 0;
   for (const li of els.list.children) {
     const hidden = hideRead && isRead(Number(li.dataset.id));
