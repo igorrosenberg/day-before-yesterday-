@@ -127,7 +127,7 @@ async function loadList(force = false) {
 function renderList(entry) {
   const range = storyWindow();
   const day = range.startDate.toLocaleDateString(undefined, { day: 'numeric', month: 'long' });
-  els.subtitle.textContent = `${day} · top ${stories.length} by points · updated ${ago(entry.fetchedAt / 1000)}`;
+  els.subtitle.textContent = `${day} · updated ${ago(entry.fetchedAt / 1000)}`;
   els.list.replaceChildren(...stories.map((s, i) => storyRow(s, i + 1)));
   els.listStatus.textContent = stories.length ? '' : 'No stories found for that day.';
   applyReadFilter();
@@ -148,14 +148,9 @@ function storyRow(s, rank) {
 function applyReadFilter() {
   els.toggleRead.setAttribute('aria-pressed', String(hideRead));
   els.toggleRead.textContent = hideRead ? 'Show read' : 'Hide read';
-  let visible = 0;
   for (const li of els.list.children) {
-    const hidden = hideRead && isRead(Number(li.dataset.id));
-    li.classList.toggle('hidden', hidden);
-    if (!hidden) visible++;
+    li.classList.toggle('hidden', hideRead && isRead(Number(li.dataset.id)));
   }
-  if (stories.length && !visible) els.listStatus.textContent = 'All caught up.';
-  else if (stories.length) els.listStatus.textContent = '';
 }
 
 function toggleReadItem(li) {
@@ -558,6 +553,10 @@ const clampInt = (v, lo, hi, dflt) => {
   const n = Math.round(Number(v));
   return Number.isFinite(n) && v !== '' ? Math.min(hi, Math.max(lo, n)) : dflt;
 };
+$('#helpLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  $('#help').showModal();
+});
 els.settingsBtn.addEventListener('click', () => {
   els.setTopN.value = settings.topN;
   els.setComments.value = settings.commentsN;

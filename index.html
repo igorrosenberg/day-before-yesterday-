@@ -31,7 +31,7 @@
     <p id="subtitle" class="muted"></p>
     <ol id="list"></ol>
     <p id="listStatus" class="status"></p>
-    <p class="hint muted">Swipe right to read &middot; swipe left to mark read &middot; pull down to refresh &middot; <a id="reload" href="./">Reload app</a></p>
+    <p class="hint muted"><a id="helpLink" href="#">Instructions</a></p>
   </section>
 
   <section id="readView" hidden>
@@ -53,6 +53,18 @@
     <div class="actions">
       <button value="cancel" formnovalidate>Cancel</button>
       <button value="save" class="primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="help">
+  <form method="dialog">
+    <h2>Yesterday on HN</h2>
+    <p>A web app with no backend (pure HTML5 and local storage). It shows the top Hacker News threads by points from the day before yesterday, in your phone's timezone, titles only. When reading, it shows only the most insightful comments.</p>
+    <p class="muted">Swipe right to read &middot; swipe left to mark read &middot; pull down to refresh</p>
+    <div class="actions">
+      <a id="reload" href="./">Reload app</a>
+      <button value="close" class="primary">Close</button>
     </div>
   </form>
 </dialog>

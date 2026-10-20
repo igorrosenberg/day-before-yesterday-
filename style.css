@@ -138,21 +138,23 @@ a { color: var(--link); }
 }
 
 /* Settings */
-#settings {
+#settings, #help {
   border: 0; border-radius: 14px; padding: 20px; width: min(92vw, 380px);
   background: var(--card); color: var(--text);
 }
-#settings::backdrop { background: rgba(0,0,0,.45); }
-#settings h2 { margin: 0 0 12px; font-size: 18px; }
+#settings::backdrop, #help::backdrop { background: rgba(0,0,0,.45); }
+#settings h2, #help h2 { margin: 0 0 12px; font-size: 18px; }
 #settings label { display: block; margin: 0 0 14px; font-size: 15px; }
 #settings input {
   display: block; width: 100%; margin-top: 4px; padding: 8px 10px; font: inherit;
   border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text);
 }
 #settings label .small { display: block; margin-top: 4px; }
-#settings .actions { display: flex; justify-content: flex-end; gap: 8px; }
-#settings .actions button {
+#settings .actions, #help .actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+#help p { margin: 0 0 12px; font-size: 15px; }
+#help #reload { margin-right: auto; color: var(--link); font-size: 14px; }
+#settings .actions button, #help .actions button {
   font: inherit; padding: 8px 16px; border-radius: 8px; cursor: pointer;
   border: 1px solid var(--line); background: transparent; color: var(--text);
 }
-#settings .actions .primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+#settings .actions .primary, #help .actions .primary { background: var(--accent); border-color: var(--accent); color: #fff; }
