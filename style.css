@@ -41,6 +41,8 @@ main { max-width: 760px; margin: 0 auto; padding: 0 0 calc(env(safe-area-inset-b
 .small { font-size: 13px; }
 #subtitle { margin: 10px 16px 6px; font-size: 13px; }
 .hint { text-align: center; font-size: 12px; margin: 16px; }
+#footer { text-align: center; font-size: 12px; margin: 0 16px 24px; }
+#footer a { color: var(--muted); }
 .status { text-align: center; color: var(--muted); margin: 24px 16px; }
 .status:empty { display: none; }
 
