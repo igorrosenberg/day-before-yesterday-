@@ -36,14 +36,16 @@ body {
 #bar button { background: none; border: 0; color: #fff; cursor: pointer; font: inherit; }
 #bar .icon { font-size: 24px; width: 36px; height: 36px; line-height: 1; }
 #bar #settingsBtn { font-size: 20px; }
+#bar #helpBtn {
+  font-size: 15px; font-weight: 700; width: 24px; height: 24px; margin: 0 6px;
+  border: 2px solid #fff; border-radius: 50%; line-height: 20px; padding: 0;
+}
 #bar .text { font-size: 13px; border: 1px solid rgba(255,255,255,.6); border-radius: 14px; padding: 3px 10px; }
 #bar .text[aria-pressed="true"] { background: rgba(255,255,255,.25); }
 main { max-width: 760px; margin: 0 auto; padding: 0 0 calc(env(safe-area-inset-bottom) + 24px); }
 .muted { color: var(--muted); }
 .small { font-size: 13px; }
 #subtitle { margin: 10px 16px 6px; font-size: 13px; }
-.hint { text-align: center; font-size: 12px; margin: 16px; }
-.hint a { color: inherit; }
 .status { text-align: center; color: var(--muted); margin: 24px 16px; }
 .status:empty { display: none; }
 

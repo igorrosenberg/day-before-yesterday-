@@ -553,10 +553,7 @@ const clampInt = (v, lo, hi, dflt) => {
   const n = Math.round(Number(v));
   return Number.isFinite(n) && v !== '' ? Math.min(hi, Math.max(lo, n)) : dflt;
 };
-$('#helpLink').addEventListener('click', (e) => {
-  e.preventDefault();
-  $('#help').showModal();
-});
+$('#helpBtn').addEventListener('click', () => $('#help').showModal());
 els.settingsBtn.addEventListener('click', () => {
   els.setTopN.value = settings.topN;
   els.setComments.value = settings.commentsN;
