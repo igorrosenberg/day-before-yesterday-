@@ -8,7 +8,13 @@
 <title>Yesterday on HN</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+<script>
+  // Carry the page's ?v=<timestamp> (set by "Reload app") onto the CSS and JS URLs so they bypass the cache too.
+  window.APP_V = new URLSearchParams(location.search).get('v') || '';
+  window.withV = (f) => (APP_V ? `${f}?v=${encodeURIComponent(APP_V)}` : f);
+  document.write(`<link rel="stylesheet" href="${withV('style.css')}">`);
+</script>
+<noscript><link rel="stylesheet" href="style.css"></noscript>
 </head>
 <body>
 <header id="bar">
@@ -36,6 +42,6 @@
 </main>
 
 <div id="toast" role="status" aria-live="polite"></div>
-<script src="app.js"></script>
+<script>document.write(`<script src="${withV('app.js')}"><\/script>`);</script>
 </body>
 </html>

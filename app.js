@@ -409,7 +409,8 @@ els.refresh.addEventListener('click', () => {
   const m = location.hash.match(/^#\/item\/(\d+)/);
   if (m) showReader(Number(m[1])); else loadList(true);
 });
-// Bypass the 10 min GitHub Pages cache: refetch assets, then load index.html under a fresh ?v=<ms> URL.
+// Bypass the 10 min GitHub Pages cache: refetch assets, then load index.html under a fresh ?v=<ms> URL;
+// index.html passes the same v on to style.css and app.js.
 // localStorage is keyed by origin, not URL, so read marks and settings survive.
 $('#reload').addEventListener('click', async (e) => {
   e.preventDefault();
