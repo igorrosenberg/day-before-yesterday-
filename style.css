@@ -99,6 +99,11 @@ li.read .rank::after { content: " \2713"; color: var(--read-bg); }
   background: var(--accent); color: #fff; text-decoration: none; font-size: 14px;
 }
 #story .open-link + .open-link { margin-left: 8px; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+#story .mark-unread {
+  display: inline-block; margin: 12px 0 0 8px; padding: 8px 14px; border-radius: 8px; font: inherit; font-size: 14px;
+  background: transparent; color: var(--muted); border: 1px solid var(--line); cursor: pointer;
+}
+#story .mark-unread[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
 #story .text { margin-top: 12px; }
 .section { font-size: 15px; margin: 18px 16px 2px; }
 #readView > .small { margin: 0 16px 8px; }

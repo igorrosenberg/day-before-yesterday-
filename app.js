@@ -35,6 +35,7 @@ let settings = { ...DEFAULTS, ...store.get('yday.settings', {}) };
 let stories = [];
 let listScrollY = 0;
 let readerId = null; // story currently open in the reader
+let keepUnreadId = null; // reader story the user chose to leave unread
 
 function pruneRead() {
   const cutoff = Date.now() - READ_KEEP_MS;
@@ -238,7 +239,10 @@ function openStory(id) {
 function route() {
   const m = location.hash.match(/^#\/item\/(\d+)/);
   const id = m ? Number(m[1]) : null;
-  if (readerId && readerId !== id) markLeftStoryRead(readerId);
+  if (readerId && readerId !== id) {
+    if (keepUnreadId !== readerId) markLeftStoryRead(readerId);
+    keepUnreadId = null;
+  }
   readerId = id;
   if (id) showReader(id);
   else showList();
@@ -330,7 +334,8 @@ function renderStoryHeader(s) {
     host,
   ].filter(Boolean).join(' · ');
   els.story.innerHTML = `<h2><a></a></h2><div class="meta"></div><div class="text"></div>
-    <a class="open-link" target="_blank" rel="noopener noreferrer"></a><a class="open-link" target="_blank" rel="noopener noreferrer">On HN</a>`;
+    <a class="open-link" target="_blank" rel="noopener noreferrer"></a><a class="open-link" target="_blank" rel="noopener noreferrer">On HN</a>
+    <button class="mark-unread" type="button"></button>`;
   const [titleLink, openLink, hnLink] = els.story.querySelectorAll('a');
   titleLink.textContent = s.title;
   titleLink.href = s.url || hnUrl;
@@ -340,6 +345,25 @@ function renderStoryHeader(s) {
   openLink.href = s.url || hnUrl;
   hnLink.href = hnUrl;
   if (!s.url) hnLink.remove();
+  const unreadBtn = els.story.querySelector('.mark-unread');
+  const syncUnreadBtn = () => {
+    const kept = keepUnreadId === s.id;
+    unreadBtn.textContent = kept ? 'Kept unread \u2713' : 'Mark unread';
+    unreadBtn.setAttribute('aria-pressed', String(kept));
+  };
+  syncUnreadBtn();
+  unreadBtn.addEventListener('click', () => {
+    if (keepUnreadId === s.id) {
+      keepUnreadId = null;
+      toast('Will be marked read when you leave');
+    } else {
+      keepUnreadId = s.id;
+      setRead(s.id, false);
+      syncRow(s.id);
+      toast('Marked unread');
+    }
+    syncUnreadBtn();
+  });
   const text = els.story.querySelector('.text');
   if (s.text) text.append(sanitize(s.text)); else text.remove();
 }
