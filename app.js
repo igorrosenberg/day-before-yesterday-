@@ -334,14 +334,14 @@ function renderStoryHeader(s) {
     host,
   ].filter(Boolean).join(' · ');
   els.story.innerHTML = `<h2><a></a></h2><div class="meta"></div><div class="text"></div>
-    <a class="open-link" target="_blank" rel="noopener noreferrer"></a><a class="open-link" target="_blank" rel="noopener noreferrer">On HN</a>
-    <button class="mark-unread" type="button"></button>`;
+    <div class="story-actions"><a class="open-link" target="_blank" rel="noopener noreferrer"></a><a class="open-link" target="_blank" rel="noopener noreferrer">On HN</a><button class="mark-unread" type="button"></button></div>`;
   const [titleLink, openLink, hnLink] = els.story.querySelectorAll('a');
   titleLink.textContent = s.title;
   titleLink.href = s.url || hnUrl;
   titleLink.target = '_blank'; titleLink.rel = 'noopener noreferrer';
   els.story.querySelector('.meta').textContent = meta;
-  openLink.textContent = s.url ? 'Open original article' : 'Open discussion';
+  if (s.url) openLink.innerHTML = 'Open <span class="wide-only">original </span>article';
+  else openLink.textContent = 'Open discussion';
   openLink.href = s.url || hnUrl;
   hnLink.href = hnUrl;
   if (!s.url) hnLink.remove();

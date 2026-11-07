@@ -94,15 +94,17 @@ li.read .rank::after { content: " \2713"; color: var(--read-bg); }
 #story h2 { margin: 0 0 6px; font-size: 20px; line-height: 1.3; }
 #story h2 a { color: var(--text); text-decoration: none; }
 #story .meta { font-size: 13px; color: var(--muted); }
-#story .open-link {
-  display: inline-block; margin-top: 12px; padding: 8px 14px; border-radius: 8px;
-  background: var(--accent); color: #fff; text-decoration: none; font-size: 14px;
+#story .story-actions { display: flex; flex-wrap: nowrap; gap: 8px; margin-top: 12px; }
+#story .open-link, #story .mark-unread {
+  flex: 0 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  padding: 8px 12px; border-radius: 8px; font: inherit; font-size: 14px; line-height: 1.2; text-align: center;
+  text-decoration: none; cursor: pointer;
 }
-#story .open-link + .open-link { margin-left: 8px; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-#story .mark-unread {
-  display: inline-block; margin: 12px 0 0 8px; padding: 8px 14px; border-radius: 8px; font: inherit; font-size: 14px;
-  background: transparent; color: var(--muted); border: 1px solid var(--line); cursor: pointer;
-}
+#story .open-link { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+#story .open-link + .open-link { background: transparent; color: var(--accent); }
+#story .mark-unread { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+@media (max-width: 400px) { #story .open-link, #story .mark-unread { padding: 8px 9px; font-size: 13px; }
+  #story .wide-only { display: none; } }
 #story .mark-unread[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
 #story .text { margin-top: 12px; }
 .section { font-size: 15px; margin: 18px 16px 2px; }
